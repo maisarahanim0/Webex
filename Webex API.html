@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>GET Example</title>
+<style type="text/css">
+#apDiv2 {
+position: absolute;
+width: 424px;
+height: 33px;
+z-index: 1;
+left: 331px;
+top: 102px;
+}
+#apDiv3 {
+position: absolute;
+width: 426px;
+height: 115px;
+z-index: 2;
+left: 234px;
+top: 165px;
+}
+</style>
+</head>
+<body>
+<br>
+<div id="output"></div>
+<div id="apDiv2">
+<h1><strong>WEBEX PROFILE APPS</strong></h1>
+</div>
+<div id="apDiv3">
+<form method = "post" action = "index2.php">
+Web Token <input type="text" size="100"
+maxlength="200" name="age">
+<br><br>
+<input type = "reset" name = "clear">
+<!submit and reset button><br><br>
+<button id="getRooms">Get Rooms</button>
+</form>
+</div>
+<script>
+const token =
+'NzU3OWMxM2EtYzBhNi00YzlkLTk2YmQtNGM4MDc1M2Q5YjI4YzU1NDgyN2EtYTll_P0A1
+_9282fec5-949a-498f-b4a3-03239519286e'
+document.getElementById('getRooms').addEventListener('click',
+getPersonId);
+function getPersonId() {
+console.log('button works');
+fetch('https://webexapis.com/v1/rooms', {
+method: 'GET',
+headers: {
+'Content-type': 'application/json',
+'Authorization': `Bearer
+NzU3OWMxM2EtYzBhNi00YzlkLTk2YmQtNGM4MDc1M2Q5YjI4YzU1NDgyN2EtYTll_P0A1
+_9282fec5-949a-498f-b4a3-03239519286e`
+},
+})
+.then(function(res){
+return res.json();
+})
+.then(function(data){
+let output = '';
+for(let i=0;i<data.items.length;i++){
+output+=`
+<ul>
+<li>${data.items[i].id}</li>
+<li>${data.items[i].names}</li>
+<li>${data.items[i].nickName}</li>
+<li>${data.items[i].firstName}</li>
+<li>${data.items[i].lastName}</li>
+<li>${data.items[i].emails}</li>
+</ul>
+`;
+}
+document.getElementById('getRooms').innerHTML = output;
+})
+}
+</script>
+</body>
+</html>
